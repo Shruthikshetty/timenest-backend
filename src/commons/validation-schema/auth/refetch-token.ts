@@ -5,12 +5,14 @@
 import { Schema } from 'express-validator';
 
 //type
+export type RefetchTokenReq = {
+  refreshToken: string;
+};
 
-
-//Schema 
-export const refetchTokenValidationSchema: Schema = {
+//Schema
+export const RefetchTokenValidationSchema: Schema = {
   refreshToken: {
-    isEmpty: {
+    notEmpty: {
       errorMessage: 'Refetch token can not be empty',
     },
     isString: {
