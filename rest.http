@@ -1,7 +1,8 @@
 @baseUrl = http://localhost:3000
 
 ### Get all users
-GET {{baseUrl}}/api/users
+GET {{baseUrl}}/api/users/all
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNocnV0aGlrc2hldHR5MTRAZ21haWwuY29tIiwidXNlcklkIjoiNjg0ODY5YWM0Mzk5NWU1ZTk0YTI1MzBhIiwiaWF0IjoxNzQ5NTc2NDAzLCJleHAiOjE3NDk1ODAwMDN9.ETkd4iVaiITOdNwZqif1x8wqnrr8nApPalXCauEBC8A
 
 ### Add a new user
 POST {{baseUrl}}/api/users
