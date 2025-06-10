@@ -1,0 +1,8 @@
+# these are the file or folders that are not to be pushed to github
+dist
+node_modules
+coverage
+.env
+.vscode
+passwords.txt
+logs

@@ -1,0 +1,26 @@
+@baseUrl = http://localhost:3000
+
+### Get all users
+GET {{baseUrl}}/api/users
+
+### Add a new user
+POST {{baseUrl}}/api/users
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "john.doe@example.com",
+  "password": "Password123",
+  "designation": "Developer",
+  "task": 0,
+  "ratings": 4
+}
+
+### authenticate user 
+POST {{baseUrl}}/api/auth
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "password": "Password123"
+}
