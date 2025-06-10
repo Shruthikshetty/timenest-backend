@@ -24,3 +24,11 @@ Content-Type: application/json
   "email": "john.doe@example.com",
   "password": "Password123"
 }
+
+### endpoint to get a new jwt token using the refresh token
+POST {{baseUrl}}/api/auth/refresh-token
+Content-Type: application/json
+
+{
+"refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwidXNlcklkIjoiNjg0NTkyNGRhZWUyYTUxNWIzOGEzYjkxIiwiaWF0IjoxNzQ5NTc0MDk4LCJleHAiOjE3NTAxNzg4OTh9.y5p-mcaoIFgJ7fADPQ-rVjUL_yeNA8P_h-mKDXYJiy0"
+}
