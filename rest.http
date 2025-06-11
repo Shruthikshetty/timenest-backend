@@ -21,6 +21,15 @@ Content-Type: application/json
   "ratings": 4
 }
 
+### update a user
+PATCH {{baseUrl}}/api/users
+Content-Type: application/json
+Authorization: Bearer <token>
+
+{
+  "name": "John doe"
+}
+
 ### authenticate user 
 POST {{baseUrl}}/api/auth
 Content-Type: application/json
@@ -35,5 +44,5 @@ POST {{baseUrl}}/api/auth/refresh-token
 Content-Type: application/json
 
 {
-"refreshToken": "token"
+  "refreshToken": "token"
 }
