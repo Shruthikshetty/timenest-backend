@@ -16,6 +16,7 @@ export interface IUser extends Document {
   task: number;
   ratings: number;
   designation: string;
+  role: 'user' | 'admin';
   // eslint-disable-next-line no-unused-vars
   comparePassword: (candidatePassword: string) => Promise<boolean>;
 }
@@ -45,6 +46,11 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
       minlength: 6,
+    },
+    role: {
+      type: String,
+      enum: ['user', 'admin'],
+      default: 'user',
     },
     task: {
       type: Number,

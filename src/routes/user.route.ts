@@ -7,6 +7,7 @@ import { addUser, getAllUsers } from '../controllers/user.controller';
 import { checkSchema } from 'express-validator';
 import { AddUserValidationSchema } from '../commons/validation-schema/users/add-user';
 import { validate } from '../commons/middlewares/validationHandler';
+import { requireAdmin } from '../commons/middlewares/authorizeAdmin';
 
 // initialize router
 const router = Router();
@@ -14,7 +15,7 @@ const router = Router();
 // all user routes
 
 // Route to get users
-router.get('/', getAllUsers);
+router.get('/all', requireAdmin, getAllUsers);
 
 // Route to add a user
 router.post('/', checkSchema(AddUserValidationSchema), validate, addUser);

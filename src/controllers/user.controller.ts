@@ -7,6 +7,7 @@ import User from '../models/user.model';
 import { handleError } from '../commons/utils/handleError';
 import { ValidatedRequest } from '../types/custom-types';
 import { AddUserReq } from '../commons/validation-schema/users/add-user';
+import mongoose from 'mongoose';
 
 /**
  *this controller is used to get all the users data
@@ -72,6 +73,28 @@ export const addUser = async (
       message: 'User created successfully',
       data: restData,
     });
+  } catch (err) {
+    handleError(res, { error: err });
+  }
+};
+
+/**
+ * Fetch a single user by ID
+ */
+export const getUserById = async (req: Request, res: Response) => {
+  try {
+    // Extract user ID from request parameters
+    const { id } = req.params;
+    // Validate the ID format
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      handleError(res, { statusCode: 400, message: 'Invalid user ID' });
+    }
+    // Find user by ID and exclude password field
+    const user = await User.findById(id).select('-password');
+    if (!user) {
+      handleError(res, { statusCode: 404, message: 'User not found' });
+    }
+    res.status(200).json({ success: true, data: user });
   } catch (err) {
     handleError(res, { error: err });
   }
