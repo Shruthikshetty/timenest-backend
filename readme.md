@@ -77,6 +77,6 @@ This is the backend service for a Task Management app where users can be created
 
 - Contributions are welcome! Feel free to submit issues or pull requests.
 
-## hosted on 
+## hosted on
 
 - https://timenest-backend-qwna.onrender.com

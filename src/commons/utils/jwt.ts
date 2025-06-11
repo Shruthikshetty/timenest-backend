@@ -37,13 +37,12 @@ export const generateTokens = (payload: TokenPayload) => {
   return { accessToken, refreshToken };
 };
 
-// this is used to verify the user token 
+// this is used to verify the user token
 export const verifyAccessToken = (token: string): TokenPayload => {
   return jwt.verify(token, JWT_SECRET) as TokenPayload;
 };
 
-
-// this is used to verify the refresh token 
+// this is used to verify the refresh token
 export const verifyRefreshToken = (token: string): TokenPayload => {
   return jwt.verify(token, REFRESH_TOKEN_SECRET) as TokenPayload;
 };

@@ -4,6 +4,10 @@
 GET {{baseUrl}}/api/users/all
 Authorization: Bearer <token>
 
+### Get single users
+GET {{baseUrl}}/api/users
+Authorization: Bearer <token>
+
 ### Add a new user
 POST {{baseUrl}}/api/users
 Content-Type: application/json

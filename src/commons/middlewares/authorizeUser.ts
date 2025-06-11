@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyAccessToken } from '../utils/jwt';
+import User from '../../models/user.model';
+import { handleError } from '../utils/handleError';
 
 /**
  * Middleware to verify if a user is authenticated.
@@ -19,20 +21,22 @@ export const requireUser = async (
     // Get the authorization header
     const token = req.headers.authorization?.split(' ')[1];
     if (!token) {
-      res.status(401).json({
-        message: 'Invalid token | No token provided',
+      handleError(res, {
         statusCode: 401,
+        message: 'Invalid token | No token provided',
       });
       return;
     }
 
-    // Verify the token and extract user details
-    const user = verifyAccessToken(token);
+    // Verify the token
+    const payload = verifyAccessToken(token);
 
+    // Fetch user from DB
+    const user = await User.findById(payload.userId);
     if (!user) {
-      res.status(401).json({
-        message: 'User not authenticated | Invalid token',
+      handleError(res, {
         statusCode: 401,
+        message: 'User not found',
       });
       return;
     }
@@ -42,7 +46,7 @@ export const requireUser = async (
     next(); // Call the next middleware or route handler
   } catch (error) {
     // Handle error if user is not authenticated
-    res.status(401).json({
+    handleError(res, {
       message: 'Authorization failed | Invalid token',
       statusCode: 401,
       error: error,
