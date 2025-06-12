@@ -9,7 +9,8 @@ import dotenv from 'dotenv';
 import allRoutes from './routes/index.route';
 import mongoose from 'mongoose';
 import { requestLogger } from './commons/middlewares/requestLogger';
-
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 /**
  * Load environment variables from .env file into process.env
  */
@@ -43,6 +44,23 @@ const PORT = process.env.PORT || 3000;
  * This allows your API to accept JSON payloads.
  */
 app.use(express.json());
+
+/**
+ * Middleware to parse cookies
+ */
+app.use(cookieParser());
+
+/**
+ * cors policy middleware
+ */
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      callback(null, origin); // Dynamically allow any origin @TODO will be fixed when in production with a allow list
+    },
+    credentials: true,
+  })
+);
 
 /**
  * Middleware to log all request

@@ -35,3 +35,10 @@ export const logger = createLogger({
     dailyRotateTransport,
   ],
 });
+
+// Exporting the logger for use in other parts of the application only if in development mode
+export const devLogger = (message: string) => {
+  if (process.env.NODE_ENV === 'development') {
+    logger.info(message);
+  }
+};

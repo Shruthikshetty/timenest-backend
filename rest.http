@@ -4,6 +4,10 @@
 GET {{baseUrl}}/api/users/all
 Authorization: Bearer <token>
 
+### Get single users
+GET {{baseUrl}}/api/users
+Authorization: Bearer <token>
+
 ### Add a new user
 POST {{baseUrl}}/api/users
 Content-Type: application/json
@@ -17,7 +21,17 @@ Content-Type: application/json
   "ratings": 4
 }
 
-### authenticate user 
+### update a user
+PATCH {{baseUrl}}/api/users
+Content-Type: application/json
+Authorization: Bearer <token>
+
+{
+  "name": "John doe"
+}
+
+### authenticate user  (login)
+### use the token from cookies and not from the res accessToken , refreshToken
 POST {{baseUrl}}/api/auth
 Content-Type: application/json
 
@@ -28,8 +42,11 @@ Content-Type: application/json
 
 ### endpoint to get a new jwt token using the refresh token
 POST {{baseUrl}}/api/auth/refresh-token
+Cookie: refreshToken=<token>
+
+
+### logout uer 
+POST {{baseUrl}}/api/auth/logout
 Content-Type: application/json
 
-{
-"refreshToken": "token"
-}
+{}

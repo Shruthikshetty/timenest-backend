@@ -8,7 +8,9 @@ import { AuthenticateUserReq } from '../commons/validation-schema/auth/validate-
 import User from '../models/user.model';
 import { Response } from 'express';
 import { generateTokens, verifyRefreshToken } from '../commons/utils/jwt';
-import { RefetchTokenReq } from '../commons/validation-schema/auth/refetch-token';
+import { devLogger } from '../commons/utils/logger';
+import { setAccessTokenCookies } from '../commons/utils/setAccessTokenCookies';
+import { Request } from 'express';
 
 /**
  * Controller to authenticate a user and return a JWT token.
@@ -46,6 +48,14 @@ export const authenticateUser = async (
       userId: user._id as string,
     });
 
+    // Log the new access token in dev mode (for debugging)
+    devLogger(
+      `access token :- ${accessToken} \n refetch token :- ${refreshToken}`
+    );
+
+    // set client cookies
+    setAccessTokenCookies(res, accessToken, refreshToken);
+
     // Respond with token and user data (without password)
     const { password: removedPass, ...userData } = user;
     void removedPass;
@@ -56,7 +66,6 @@ export const authenticateUser = async (
       data: {
         user: userData,
         accessToken,
-        refreshToken,
       },
     });
   } catch (err) {
@@ -65,39 +74,65 @@ export const authenticateUser = async (
 };
 
 /**
- * This is used top generate a new jwt token by taken the refetch token
+ * Controller to generate a new access token and refresh token
+ * by verifying the refresh token stored in the HttpOnly cookie.
  */
-export const refreshToken = (
-  req: ValidatedRequest<RefetchTokenReq>,
-  res: Response
-) => {
-  // extract the refetch token from the validated request
-  const { refreshToken } = req.validatedData!;
+export const refreshToken = (req: Request, res: Response) => {
+  // Extract the refresh token from cookies
+  const refreshToken = req.cookies.refreshToken;
+
+  // Step 2: Handle case where token is missing
+  if (!refreshToken) {
+    return handleError(res, {
+      message: 'Refresh token missing',
+      statusCode: 401,
+    });
+  }
 
   try {
-    // get the details from the refetch token
+    // Verify the refresh token's validity and extract user payload
     const payload = verifyRefreshToken(refreshToken);
 
-    // if the token is valid, generate a new access token and refresh token
+    // Generate a new access token and refresh token
     const { accessToken, refreshToken: newRefreshToken } = generateTokens({
       userId: payload.userId,
       email: payload.email,
     });
 
-    // send the new tokens in the response
+    // Log the new access token in dev mode (for debugging)
+    devLogger(
+      `access token :- ${accessToken} \n refetch token :- ${newRefreshToken}`
+    );
+
+    // Set the new access & refresh tokens in cookies
+    setAccessTokenCookies(res, accessToken, newRefreshToken);
+
+    // Return the access token in response body (optional)
     res.status(200).json({
       success: true,
       message: 'Token refreshed successfully',
       data: {
-        accessToken,
-        refreshToken: newRefreshToken,
+        accessToken, // sent to client for use in Authorization header
       },
     });
   } catch (err) {
+    // If token is invalid or expired, return a 401 error
     handleError(res, {
       message: 'Invalid or expired refresh token',
       statusCode: 401,
       error: err,
     });
   }
+};
+
+/**
+ * Controller to log out a user by clearing authentication cookies.
+ */
+export const logout = (_req: Request, res: Response) => {
+  res.clearCookie('accessToken', { httpOnly: false, sameSite: 'strict' });
+  res.clearCookie('refreshToken', { httpOnly: true, sameSite: 'strict' });
+  res.status(200).json({
+    success: true,
+    message: 'Logged out successfully',
+  });
 };
