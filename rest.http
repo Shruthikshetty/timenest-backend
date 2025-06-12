@@ -45,8 +45,23 @@ POST {{baseUrl}}/api/auth/refresh-token
 Cookie: refreshToken=<token>
 
 
-### logout uer 
+### logout user
 POST {{baseUrl}}/api/auth/logout
 Content-Type: application/json
 
 {}
+
+
+### send message 
+POST {{baseUrl}}/api/messages
+Content-Type: application/json
+Authorization: Bearer <token>
+
+{
+  "receiver": "mongoid",
+  "content": "Hi bro"
+}
+
+### get all message by the user 
+GET {{baseUrl}}/api/messages/:receiverId
+Authorization: Bearer <token>
