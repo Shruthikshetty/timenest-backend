@@ -7,7 +7,8 @@ import { ValidatedRequest } from '../types/custom-types';
 import { handleError } from '../commons/utils/handleError';
 import { SendMessageReq } from '../commons/validation-schema/message/add-message';
 import Message, { IMessage } from '../models/message';
-import { MessageLimits } from '../commons/constants/logic.constatnts';
+import { MessageLimits } from '../commons/constants/logic.constants';
+import { io } from '../index';
 
 /**
  * this is the controller used for sending a message (adding a message between sender and receiver)
@@ -21,11 +22,11 @@ export const sendMessage = async (
     const { content, receiver, type = 'text' } = req.validatedData!;
 
     // extract  sender details from authorized user
-    const user = req.user!;
+    const { _id } = req.user!;
 
     // create a new message
     const newMessage = new Message({
-      sender: user._id,
+      sender: _id,
       receiver,
       content,
       type,
@@ -33,6 +34,10 @@ export const sendMessage = async (
 
     // save the new message
     const savedMessage = await newMessage.save();
+
+    // Emit the message to the receiver and sender via Socket.io
+    io.to(receiver.toString()).emit('receive_message', newMessage);
+    io.to((_id as string).toString()).emit('receive_message', newMessage); // sender
 
     // send response with the saved message
     res.status(201).json({
@@ -48,7 +53,10 @@ export const sendMessage = async (
 
 //get messages of a user
 //messages/:receiverId
-export const getMessages = async (req: ValidatedRequest<{}>, res: Response) => {
+export const getMessages = async (
+  req: ValidatedRequest<undefined>,
+  res: Response
+) => {
   try {
     // extract id from validated user
     const { _id: senderId } = req.user!;

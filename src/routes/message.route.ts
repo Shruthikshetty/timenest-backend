@@ -24,7 +24,7 @@ router.post(
 // Route to get message between sender and receiver
 router.get('/:receiverId', requireUser, getMessages);
 
-//Route to get all user messages 
+//Route to get all user messages
 router.get('/', requireUser, getMessages);
 
 // export all user routes clubbed

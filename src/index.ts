@@ -11,6 +11,9 @@ import mongoose from 'mongoose';
 import { requestLogger } from './commons/middlewares/requestLogger';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import { createServer } from 'http';
+import { Server } from 'socket.io';
+
 /**
  * Load environment variables from .env file into process.env
  */
@@ -84,14 +87,29 @@ app.get('/', (_: Request, res: Response) => {
 });
 
 /**
- * Start the Express server and listen on the defined port.
- * Logs a message to the console once the server is running.
+ * create server
  */
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+const server = createServer(app);
+export const io = new Server(server, {
+  cors: { origin: '*' },
+});
+
+io.on('connection', (socket) => {
+  const userId = socket.handshake.query.userId as string;
+  if (userId) {
+    socket.join(userId);
+    console.log(`User ${userId} joined their room`);
+  }
+});
+
+/**
+ * listen to the server
+ */
+server.listen(PORT, () => {
+  console.log(`Server running at ${PORT}`);
 });
 
 /**
  * Export the Express app instance for testing.
  */
-export default app;
+export default server;
