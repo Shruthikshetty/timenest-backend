@@ -58,10 +58,18 @@ Content-Type: application/json
 Authorization: Bearer <token>
 
 {
-  "receiver": "mongoid",
-  "content": "Hi bro"
+  "receiver": "receiver id",
+  "content": "any reply ??"
 }
 
 ### get all message by the user 
+GET {{baseUrl}}/api/messages
+Authorization: Bearer <token>
+
+### get all message by the user and a single receiver
 GET {{baseUrl}}/api/messages/:receiverId
+Authorization: Bearer <token>
+
+### with limits  start (start from what message) , limit (how many messages to get )
+GET {{baseUrl}}/api/messages/<receiverId>?limit=2&start=0
 Authorization: Bearer <token>

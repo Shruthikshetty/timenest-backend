@@ -7,6 +7,7 @@ import { ValidatedRequest } from '../types/custom-types';
 import { handleError } from '../commons/utils/handleError';
 import { SendMessageReq } from '../commons/validation-schema/message/add-message';
 import Message, { IMessage } from '../models/message';
+import { MessageLimits } from '../commons/constants/logic.constatnts';
 
 /**
  * this is the controller used for sending a message (adding a message between sender and receiver)
@@ -55,6 +56,13 @@ export const getMessages = async (req: ValidatedRequest<{}>, res: Response) => {
     // from params
     const receiverId = req.params.receiverId;
 
+    // Pagination: Parse from query and set sensible defaults/bounds
+    const start = parseInt(req.query.start as string) || 0;
+    const limit = Math.min(
+      parseInt(req.query.limit as string) || MessageLimits.min,
+      MessageLimits.max
+    );
+
     // define a message
     let messages: IMessage[];
 
@@ -67,6 +75,8 @@ export const getMessages = async (req: ValidatedRequest<{}>, res: Response) => {
         ],
       })
         .sort({ createdAt: 1 }) // Sort oldest -> newest
+        .skip(start)
+        .limit(limit)
         .lean();
     } else {
       // get all user messages
@@ -74,6 +84,8 @@ export const getMessages = async (req: ValidatedRequest<{}>, res: Response) => {
         $or: [{ sender: senderId }, { receiver: senderId }],
       })
         .sort({ createdAt: 1 })
+        .skip(start)
+        .limit(limit)
         .lean();
     }
 
