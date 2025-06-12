@@ -2,7 +2,7 @@
  * @file contains all the controllers related to the messages
  */
 
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { ValidatedRequest } from '../types/custom-types';
 import { handleError } from '../commons/utils/handleError';
 import { SendMessageReq } from '../commons/validation-schema/message/add-message';
@@ -62,12 +62,12 @@ export const getMessages = async (
     const { _id: senderId } = req.user!;
 
     // from params
-    const receiverId = req.params.receiverId;
+    const receiverId = (req as unknown as Request).params.receiverId;
 
     // Pagination: Parse from query and set sensible defaults/bounds
     // Parse and validate pagination parameters
-    let start = parseInt(req.query.start as string, 10);
-    let limit = parseInt(req.query.limit as string, 10);
+    let start = parseInt((req as unknown as Request).query.start as string, 10);
+    let limit = parseInt((req as unknown as Request).query.limit as string, 10);
 
     // Validate start
     if (isNaN(start) || start < 0) {
