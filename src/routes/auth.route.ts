@@ -15,8 +15,6 @@ import {
 // initialize router
 const router = Router();
 
-// all user routes
-
 // Route to authenticate user (login)
 router.post(
   '/',
