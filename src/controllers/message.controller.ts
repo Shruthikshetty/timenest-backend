@@ -57,11 +57,21 @@ export const getMessages = async (req: ValidatedRequest<{}>, res: Response) => {
     const receiverId = req.params.receiverId;
 
     // Pagination: Parse from query and set sensible defaults/bounds
-    const start = parseInt(req.query.start as string) || 0;
-    const limit = Math.min(
-      parseInt(req.query.limit as string) || MessageLimits.min,
-      MessageLimits.max
-    );
+    // Parse and validate pagination parameters
+    let start = parseInt(req.query.start as string, 10);
+    let limit = parseInt(req.query.limit as string, 10);
+
+    // Validate start
+    if (isNaN(start) || start < 0) {
+      start = 0;
+    }
+
+    // Validate limit
+    if (isNaN(limit) || limit < MessageLimits.min) {
+      limit = MessageLimits.min;
+    } else if (limit > MessageLimits.max) {
+      limit = MessageLimits.max;
+    }
 
     // define a message
     let messages: IMessage[];
