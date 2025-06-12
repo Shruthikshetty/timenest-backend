@@ -13,8 +13,8 @@ POST {{baseUrl}}/api/users
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "john.doe@example.com",
+  "name": "rock",
+  "email": "rock@gmail.com",
   "password": "Password123",
   "designation": "Developer",
   "task": 0,
@@ -36,7 +36,7 @@ POST {{baseUrl}}/api/auth
 Content-Type: application/json
 
 {
-  "email": "john.doe@example.com",
+  "email": "rock@gmail.com",
   "password": "Password123"
 }
 
@@ -58,8 +58,8 @@ Content-Type: application/json
 Authorization: Bearer <token>
 
 {
-  "receiver": "receiver id",
-  "content": "any reply ??"
+  "receiver": "6845924daee2a515b38a3b91",
+  "content": "cool"
 }
 
 ### get all message by the user 
