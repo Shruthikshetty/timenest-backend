@@ -13,6 +13,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
+import { logger } from './commons/utils/logger';
 
 /**
  * Load environment variables from .env file into process.env
@@ -98,7 +99,7 @@ io.on('connection', (socket) => {
   const userId = socket.handshake.query.userId as string;
   if (userId) {
     socket.join(userId);
-    console.log(`User ${userId} joined their room`);
+    logger.info(`User ${userId} joined their room`);
   }
 });
 
