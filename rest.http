@@ -2,11 +2,9 @@
 
 ### Get all users
 GET {{baseUrl}}/api/users/all
-Authorization: Bearer <token>
 
 ### Get single users
 GET {{baseUrl}}/api/users
-Authorization: Bearer <token>
 
 ### Add a new user
 POST {{baseUrl}}/api/users
@@ -24,7 +22,6 @@ Content-Type: application/json
 ### update a user
 PATCH {{baseUrl}}/api/users
 Content-Type: application/json
-Authorization: Bearer <token>
 
 {
   "name": "John doe"
@@ -42,7 +39,6 @@ Content-Type: application/json
 
 ### endpoint to get a new jwt token using the refresh token
 POST {{baseUrl}}/api/auth/refresh-token
-Cookie: refreshToken=<token>
 
 
 ### logout user
@@ -55,7 +51,6 @@ Content-Type: application/json
 ### send message 
 POST {{baseUrl}}/api/messages
 Content-Type: application/json
-Authorization: Bearer <token>
 
 {
   "receiver": "6845924daee2a515b38a3b91",
@@ -64,12 +59,9 @@ Authorization: Bearer <token>
 
 ### get all message by the user 
 GET {{baseUrl}}/api/messages
-Authorization: Bearer <token>
 
 ### get all message by the user and a single receiver
 GET {{baseUrl}}/api/messages/:receiverId
-Authorization: Bearer <token>
 
 ### with limits  start (start from what message) , limit (how many messages to get )
 GET {{baseUrl}}/api/messages/<receiverId>?limit=2&start=0
-Authorization: Bearer <token>

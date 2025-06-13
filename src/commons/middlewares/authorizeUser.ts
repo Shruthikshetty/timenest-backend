@@ -18,8 +18,8 @@ export const requireUser = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    // Get the authorization header
-    const token = req.headers.authorization?.split(' ')[1];
+    // Get the access token from cookies
+    const token = req.cookies?.accessToken;
     if (!token) {
       handleError(res, {
         statusCode: 401,

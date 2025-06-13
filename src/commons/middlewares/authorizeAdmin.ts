@@ -16,9 +16,10 @@ export const requireAdmin = async (
   next: NextFunction
 ) => {
   try {
-    // get the header authentication token
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
+    // Get the access token from cookies
+    const token = req.cookies?.accessToken;
+
+    if (!token) {
       handleError(res, {
         statusCode: 401,
         message: 'No token provided',
@@ -26,8 +27,6 @@ export const requireAdmin = async (
       return;
     }
 
-    // Check if the token is in the correct format
-    const token = authHeader.split(' ')[1];
     // If the token is not provided or is in an invalid format
     const payload = verifyAccessToken(token);
 
