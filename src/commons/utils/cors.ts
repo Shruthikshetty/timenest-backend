@@ -6,5 +6,5 @@ export const corsOptions = {
   origin: (origin, callback) => {
     callback(null, origin); // Dynamically allow any origin @TODO will be fixed when in production with a allow list
   },
-  credentials: true,
+  // credentials: true,
 };
