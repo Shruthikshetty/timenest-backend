@@ -1,4 +1,3 @@
-//@TODO in progress
 import { Document, Schema, model, Types } from 'mongoose';
 import { MessageTypes } from '../commons/constants/model.constants';
 

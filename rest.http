@@ -65,3 +65,6 @@ GET {{baseUrl}}/api/messages/:receiverId
 
 ### with limits  start (start from what message) , limit (how many messages to get )
 GET {{baseUrl}}/api/messages/<receiverId>?limit=2&start=0
+
+### get all users that a user is following 
+GET {{baseUrl}}/api/followers
