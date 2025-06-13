@@ -14,6 +14,7 @@ import cors from 'cors';
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 import { logger } from './commons/utils/logger';
+import { corsOptions } from './commons/utils/cors';
 
 /**
  * Load environment variables from .env file into process.env
@@ -57,14 +58,7 @@ app.use(cookieParser());
 /**
  * cors policy middleware
  */
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      callback(null, origin); // Dynamically allow any origin @TODO will be fixed when in production with a allow list
-    },
-    credentials: true,
-  })
-);
+app.use(cors(corsOptions));
 
 /**
  * Middleware to log all request
@@ -92,7 +86,7 @@ app.get('/', (_: Request, res: Response) => {
  */
 const server = createServer(app);
 export const io = new Server(server, {
-  cors: { origin: '*' },
+  cors: corsOptions,
 });
 
 io.on('connection', (socket) => {
