@@ -13,7 +13,7 @@ export const setAccessTokenCookies = (
   const secureCookie = process.env.COOKIE_SECURE === 'true';
 
   res.cookie('accessToken', accessToken, {
-    httpOnly: false, // normal cookie so JS can read it
+    httpOnly: true, // secure from JS access
     secure: secureCookie,
     sameSite: secureCookie ? 'none' : 'lax',
     maxAge: 60 * 60 * 1000, // 60 minutes
