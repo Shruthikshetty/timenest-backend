@@ -7,6 +7,8 @@ import { ValidatedRequest } from '../types/custom-types';
 import Follower from '../models/follower';
 import { AddFollowerReq } from '../commons/validation-schema/follower/add-follower';
 import { getFollowersWithOptions } from '../commons/utils/getFollowers';
+import User from '../models/user.model';
+import { Types } from 'mongoose';
 
 /**
  * This controller is used to retrieve all the users that a user is following
@@ -98,6 +100,58 @@ export const deleteFollower = async (
     });
 
     //send response with the deleted follower
+    res.status(200).json({ success: true, data: follower });
+  } catch (err) {
+    //catch any errors
+    handleError(res, { error: err });
+  }
+};
+
+/**
+ * controller to Get follower details by follower id
+ */
+export const getFollowerDetail = async (
+  req: ValidatedRequest<undefined>,
+  res: Response
+) => {
+  try {
+    // check and validate follower id
+    const followerId = req.params?.followingId;
+
+    // check if the follower id is provided and is valid mongo id
+    if (!followerId || !Types.ObjectId.isValid(followerId)) {
+      handleError(res, { statusCode: 400, message: 'Follower id is empty or invalid' });
+      return;
+    }
+
+    // check if user is following this user
+    const isFollowing = await Follower.findOne({
+      user: req.user!._id,
+      following: followerId,
+    });
+
+    // if user is not following this user
+    if (!isFollowing) {
+      handleError(res, {
+        statusCode: 403,
+        message: 'You are not following this user',
+      });
+      return;
+    }
+
+    //find the follower
+    const follower = await User.findById(followerId)
+      .select('-__v -password -role -createdAt -updatedAt')
+      .lean()
+      .exec();
+
+    //incase no follower found
+    if (!follower) {
+      handleError(res, { statusCode: 404, message: 'Follower not found' });
+      return;
+    }
+
+    //send response with the follower details
     res.status(200).json({ success: true, data: follower });
   } catch (err) {
     //catch any errors

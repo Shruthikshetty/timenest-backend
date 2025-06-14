@@ -8,6 +8,7 @@ import {
   getFollowers,
   addFollower,
   deleteFollower,
+  getFollowerDetail,
 } from '../controllers/follower.controller';
 import { checkSchema } from 'express-validator';
 import { validate } from '../commons/middlewares/validationHandler';
@@ -36,6 +37,9 @@ router.delete(
   validate,
   deleteFollower
 );
+
+// Route to get a single follower details
+router.get('/:followingId', requireUser, getFollowerDetail);
 
 //export all user routes clubbed
 export default router;
