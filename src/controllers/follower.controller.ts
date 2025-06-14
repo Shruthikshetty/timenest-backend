@@ -78,3 +78,25 @@ export const addFollower = async (
     return;
   }
 };
+
+/*
+ *controller to delete follower (UNFOLLOW A USER)
+ */
+export const deleteFollower = async (
+  req: ValidatedRequest<AddFollowerReq>,
+  res: Response
+) => {
+  try {
+    //find the follower to be deleted
+    const follower = await Follower.findOneAndDelete({
+      user: req.user!._id,
+      following: req.validatedData!.following,
+    });
+
+    //send response with the deleted follower
+    res.status(200).json({ success: true, data: follower });
+  } catch (err) {
+    //catch any errors
+    handleError(res, { error: err });
+  }
+};

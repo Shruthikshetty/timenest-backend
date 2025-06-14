@@ -4,7 +4,11 @@
 
 import { Router } from 'express';
 import { requireUser } from '../commons/middlewares/authorizeUser';
-import { getFollowers, addFollower } from '../controllers/follower.controller';
+import {
+  getFollowers,
+  addFollower,
+  deleteFollower,
+} from '../controllers/follower.controller';
 import { checkSchema } from 'express-validator';
 import { validate } from '../commons/middlewares/validationHandler';
 import { AddFollowerValidationSchema } from '../commons/validation-schema/follower/add-follower';
@@ -22,6 +26,15 @@ router.post(
   checkSchema(AddFollowerValidationSchema),
   validate,
   addFollower
+);
+
+//Route to remove a follower
+router.delete(
+  '/',
+  requireUser,
+  checkSchema(AddFollowerValidationSchema),
+  validate,
+  deleteFollower
 );
 
 //export all user routes clubbed
