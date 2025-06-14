@@ -120,7 +120,10 @@ export const getFollowerDetail = async (
 
     // check if the follower id is provided and is valid mongo id
     if (!followerId || !Types.ObjectId.isValid(followerId)) {
-      handleError(res, { statusCode: 400, message: 'Follower id is empty or invalid' });
+      handleError(res, {
+        statusCode: 400,
+        message: 'Follower id is empty or invalid',
+      });
       return;
     }
 
@@ -155,6 +158,32 @@ export const getFollowerDetail = async (
     res.status(200).json({ success: true, data: follower });
   } catch (err) {
     //catch any errors
+    handleError(res, { error: err });
+  }
+};
+
+/**
+ * controller to get the count of followers and following users for a user
+ */
+export const followerCount = async (
+  req: ValidatedRequest<undefined>,
+  res: Response
+) => {
+  try {
+    // get the user id from the validated user
+    const { _id } = req.user!;
+
+    // get the count of followers and following users for the user
+    const followerCount = await Follower.countDocuments({ following: _id });
+    const followingCount = await Follower.countDocuments({ user: _id });
+
+    // send response with the count of followers and following users
+    res.status(200).json({
+      success: true,
+      data: { followers: followerCount, following: followingCount },
+    });
+  } catch (err) {
+    // catch any errors
     handleError(res, { error: err });
   }
 };

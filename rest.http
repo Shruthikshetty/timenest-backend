@@ -80,7 +80,10 @@ GET {{baseUrl}}/api/followers
 GET {{baseUrl}}/api/followers?full_details=false
 
 ### get the details of user you are following by follower id 
-GET {{baseUrl}}/api/followers/6845924daee2a515b38a3b91
+GET {{baseUrl}}/api/followers/details/6845924daee2a515b38a3b91
+
+### get the count of followers and following for a user 
+GET {{baseUrl}}/api/followers/count
 
 ### add a new follower 
 POST {{baseUrl}}/api/followers
