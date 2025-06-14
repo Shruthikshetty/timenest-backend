@@ -11,18 +11,23 @@ export interface IFollower extends Document {
 }
 
 // define the follower schema
-const followerSchema = new Schema({
-  user: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
+const followerSchema = new Schema(
+  {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
+    following: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
   },
-  following: {
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 // create the model from the schema
 const Follower = model('Follower', followerSchema);
