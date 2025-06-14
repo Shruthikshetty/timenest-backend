@@ -19,6 +19,8 @@ const statusMessages: Record<number, string> = {
   409: 'Conflict',
   422: 'Unprocessable Entity',
   500: 'Server down please try after some time',
+  502: 'Bad Gateway',
+  503: 'Service Unavailable',
   // and additional status to be added
 };
 

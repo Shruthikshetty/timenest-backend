@@ -80,4 +80,4 @@ export const UpdateUserValidationSchema: Schema = {
       errorMessage: 'Designation must be at most 50 characters',
     },
   },
-}; 
+};

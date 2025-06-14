@@ -7,6 +7,7 @@ import { Router } from 'express';
 import userRoute from './user.route';
 import authRoute from './auth.route';
 import messageRoute from './message.route';
+import followerRoute from './follower.route';
 
 // Initialize the main router
 const router = Router();
@@ -24,7 +25,10 @@ router.use('/auth', authRoute);
  * Mount all the message routes "/messages"
  */
 router.use('/messages', messageRoute);
-
+/**
+ * Mount all the follower routes "/followers"
+ */
+router.use('/followers', followerRoute);
 /**
  * Export the combined router to be used in the main app.
  */
