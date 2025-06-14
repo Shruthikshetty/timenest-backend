@@ -1,7 +1,4 @@
-
-
-Here is the API documentation in Markdown format:
-
+NOTE :- AI GENERATED JUST FOR REFERENCE 
 
 # API Documentation
 ======================
