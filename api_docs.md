@@ -4,6 +4,32 @@ NOTE :- AI GENERATED JUST FOR REFERENCE (refer rest.http if using vs code rest c
 
 ======================
 
+## 📚 Table of Contents
+
+1. [User Endpoints](#user-endpoints)
+   - [Get All Users](#get-all-users)
+   - [Get Single User](#get-single-user)
+   - [Add a New User](#add-a-new-user)
+   - [Update a User](#update-a-user)
+2. [Auth Endpoints](#auth-endpoints)
+   - [Authenticate User (Login)](#authenticate-user-login)
+   - [Get a New JWT Token using Refresh Token](#get-a-new-jwt-token-using-refresh-token)
+   - [Logout User](#logout-user)
+3. [Message Endpoints](#message-endpoints)
+   - [Send Message](#send-message)
+   - [Get All Messages by User](#get-all-messages-by-user)
+   - [Get All Messages by User and Single Receiver](#get-all-messages-by-user-and-single-receiver)
+   - [Get Messages with Limits](#get-messages-with-limits)
+4. [Follower Endpoints](#follower-endpoints)
+   - [Get All Users That a User is Following](#get-all-users-that-a-user-is-following)
+   - [Get All Users with Full Details](#get-all-users-with-full-details)
+   - [Get Details of User You Are Following by Follower ID](#get-details-of-user-you-are-following-by-follower-id)
+   - [Get Count of Followers and Following for a User](#get-count-of-followers-and-following-for-a-user)
+   - [Add a New Follower](#add-a-new-follower)
+   - [Delete a Follower (Unfollow)](#delete-a-follower-unfollow)
+
+---
+
 ## Base URL
 
 ---
