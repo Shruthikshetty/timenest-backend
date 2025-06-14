@@ -6,6 +6,7 @@ import { handleError } from '../commons/utils/handleError';
 import { ValidatedRequest } from '../types/custom-types';
 import Follower from '../models/follower';
 import { AddFollowerReq } from '../commons/validation-schema/follower/add-follower';
+import { getFollowersWithOptions } from '../commons/utils/getFollowers';
 
 /**
  * This controller is used to retrieve all the users that a user is following
@@ -18,8 +19,11 @@ export const getFollowers = async (
     //get the user id from the validated user
     const { _id } = req.user!;
 
+    // Check if populate is required
+    const populate = req.query.full_details === 'false';
+
     //find all the users that the user is following
-    const followers = await Follower.find({ user: _id }).select('-__v');
+    const followers = await getFollowersWithOptions(_id as string, populate);
 
     // incase no followers found
     if (followers.length === 0) {

@@ -69,6 +69,9 @@ GET {{baseUrl}}/api/messages/<receiverId>?limit=2&start=0
 ### get all users that a user is following 
 GET {{baseUrl}}/api/followers
 
+### get all users full_details = false
+GET {{baseUrl}}/api/followers?full_details=false
+
 ### add a new follower 
 POST {{baseUrl}}/api/followers
 Content-Type: application/json
@@ -76,6 +79,8 @@ Content-Type: application/json
 {
   "following": "6845924daee2a515b38a3b91"
 }
+
+
 
 ### delete a follower (UnFollow)
 DELETE {{baseUrl}}/api/followers
