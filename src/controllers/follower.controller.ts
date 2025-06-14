@@ -49,6 +49,21 @@ export const addFollower = async (
     // extract following user id from the validated data
     const { following } = req.validatedData!;
 
+    // check if the user is already following the user
+    const existingFollower = await Follower.findOne({
+      user: _id,
+      following,
+    });
+
+    // if the user is already following the user
+    if (existingFollower) {
+      handleError(res, {
+        statusCode: 409,
+        message: 'You are already following this user',
+      });
+      return;
+    }
+
     // create a new follower
     const newFollower = new Follower({ user: _id, following });
 
