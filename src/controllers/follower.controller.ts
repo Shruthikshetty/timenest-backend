@@ -1,7 +1,7 @@
 /**
  * @file contains all the controllers related to follower
  */
-import { Response } from 'express';
+import { Response, Request } from 'express';
 import { handleError } from '../commons/utils/handleError';
 import { ValidatedRequest } from '../types/custom-types';
 import Follower from '../models/follower';
@@ -22,7 +22,7 @@ export const getFollowers = async (
     const { _id } = req.user!;
 
     // Check if populate is required
-    const populate = req.query.full_details === 'false';
+    const populate = (req as unknown as Request).query.full_details === 'false';
 
     //find all the users that the user is following
     const followers = await getFollowersWithOptions(_id as string, populate);
@@ -116,7 +116,7 @@ export const getFollowerDetail = async (
 ) => {
   try {
     // check and validate follower id
-    const followerId = req.params?.followingId;
+    const followerId = (req as unknown as Request).params?.followingId;
 
     // check if the follower id is provided and is valid mongo id
     if (!followerId || !Types.ObjectId.isValid(followerId)) {
