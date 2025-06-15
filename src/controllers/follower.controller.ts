@@ -77,7 +77,13 @@ export const addFollower = async (
     const savedFollower = await newFollower.save();
 
     // send response with the saved follower
-    res.status(200).json({ success: true, data: savedFollower });
+    res
+      .status(200)
+      .json({
+        success: true,
+        data: savedFollower,
+        message: 'Follower added successfully',
+      });
   } catch (err) {
     // catch any errors
     handleError(res, { error: err });
@@ -100,7 +106,11 @@ export const deleteFollower = async (
     });
 
     //send response with the deleted follower
-    res.status(200).json({ success: true, data: follower });
+    res.status(200).json({
+      success: true,
+      data: follower,
+      message: 'Follower deleted successfully',
+    });
   } catch (err) {
     //catch any errors
     handleError(res, { error: err });

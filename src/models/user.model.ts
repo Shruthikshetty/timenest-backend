@@ -17,6 +17,7 @@ export interface IUser extends Document {
   ratings: number;
   designation: string;
   role: 'user' | 'admin';
+  mentor: boolean;
   // eslint-disable-next-line no-unused-vars
   comparePassword: (candidatePassword: string) => Promise<boolean>;
 }
@@ -68,6 +69,10 @@ const userSchema = new Schema<IUser>(
       required: true,
       trim: true,
       maxlength: 50,
+    },
+    mentor: {
+      type: Boolean,
+      default: false,
     },
   },
   {

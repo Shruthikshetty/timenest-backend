@@ -101,3 +101,15 @@ Content-Type: application/json
 {
   "following": "6845924daee2a515b38a3b91"
 }
+
+##### ---------------------------------------------- Reviews ----------------------------------------------------------- 
+
+### add a new  review 
+POST {{baseUrl}}/api/reviews
+Content-Type: application/json
+
+{
+  "revieweeId": "6845924daee2a515b38a3b91",
+  "message": "best mentor great !!",
+  "rating": "5"
+}
