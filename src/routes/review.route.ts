@@ -6,8 +6,13 @@ import { Router } from 'express';
 import { requireUser } from '../commons/middlewares/authorizeUser';
 import { checkSchema } from 'express-validator';
 import { validate } from '../commons/middlewares/validationHandler';
-import { addReview } from '../controllers/review.controller';
+import {
+  addReview,
+  deleteReview,
+  geUserReviews,
+} from '../controllers/review.controller';
 import { addReviewValidationSchema } from '../commons/validation-schema/review/add-review';
+import { deleteReviewValidationSchema } from '../commons/validation-schema/review/delete-review';
 
 //initialize Router
 const router = Router();
@@ -20,6 +25,18 @@ router.post(
   validate,
   addReview
 );
+
+//Route to delete a review
+router.delete(
+  '/',
+  requireUser,
+  checkSchema(deleteReviewValidationSchema),
+  validate,
+  deleteReview
+);
+
+//Route to get all reviews by  user
+router.get('/', requireUser, geUserReviews);
 
 // export all user routes clubbed
 export default router;

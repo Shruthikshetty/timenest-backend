@@ -113,3 +113,14 @@ Content-Type: application/json
   "message": "best mentor great !!",
   "rating": "5"
 }
+
+### get all reviews by user 
+GET {{baseUrl}}/api/reviews
+
+### delete a review
+DELETE  {{baseUrl}}/api/reviews
+Content-Type: application/json
+
+{
+  "reviewId": "684ef32612ac8f522c79ed4b"
+}

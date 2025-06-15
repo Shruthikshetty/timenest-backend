@@ -36,11 +36,17 @@ const reviewSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    unique: {
-      fields: ['reviewerId', 'revieweeId'], //one user can only review another user once
-      options: {
-        message: 'A Review already exists between these two users',
-      },
+  }
+);
+
+// Add compound unique index
+reviewSchema.index(
+  { reviewerId: 1, revieweeId: 1 },
+  {
+    unique: true,
+    partialFilterExpression: {
+      reviewerId: { $exists: true },
+      revieweeId: { $exists: true },
     },
   }
 );

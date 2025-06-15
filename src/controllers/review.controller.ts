@@ -9,6 +9,7 @@ import { ValidatedRequest } from '../types/custom-types';
 import { AddReviewReq } from '../commons/validation-schema/review/add-review';
 import { Types } from 'mongoose';
 import { DeleteReviewReq } from '../commons/validation-schema/review/delete-review';
+import { MongoServerError } from 'mongodb';
 
 /**
  * This is a controller used to add a new review
@@ -39,9 +40,19 @@ export const addReview = async (
       data: savedReview,
       message: 'Review added successfully',
     });
-  } catch (err) {
+  } catch (err: unknown) {
     // handle unexpected error
+    if ((err as MongoServerError)?.errorResponse?.code === 11000) {
+      // in case the error is a duplicate key error
+      handleError(res, {
+        error: err,
+        message: 'Review already exists',
+        statusCode: 409,
+      });
+      return;
+    }
     handleError(res, { error: err });
+    return;
   }
 };
 
@@ -58,6 +69,15 @@ export const geUserReviews = async (
 
     // get the reviews for the user
     const reviews = await Review.find({ reviewerId: user._id });
+
+    //incase no reviews found
+    if (reviews.length === 0) {
+      handleError(res, {
+        statusCode: 404,
+        message: 'No reviews found',
+      });
+      return;
+    }
 
     // send response with the reviews
     res.status(200).json({ success: true, data: reviews });
@@ -85,6 +105,15 @@ export const getReviewForUser = async (req: Request, res: Response) => {
     }
     // find the reviews  by reviewee id
     const reviews = await Review.find({ revieweeId: revieweeId });
+
+    //incase no reviews found
+    if (reviews.length === 0) {
+      handleError(res, {
+        statusCode: 404,
+        message: 'No reviews found',
+      });
+      return;
+    }
 
     //send response with the reviews
     res.status(200).json({ success: true, data: reviews });
@@ -117,7 +146,7 @@ export const deleteReview = async (
       });
       return;
     }
-    
+
     // send response with the deleted review
     res.status(200).json({
       success: true,
