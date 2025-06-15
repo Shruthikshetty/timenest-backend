@@ -11,6 +11,7 @@ import { Types } from 'mongoose';
 import { DeleteReviewReq } from '../commons/validation-schema/review/delete-review';
 import { MongoServerError } from 'mongodb';
 import { getReviewsWithOptions } from '../commons/utils/getReviews';
+import { UpdateReviewReq } from '../commons/validation-schema/review/update-review';
 
 /**
  * This is a controller used to add a new review
@@ -183,6 +184,48 @@ export const deleteReview = async (
       success: true,
       data: deletedReview,
       message: 'Review deleted successfully',
+    });
+  } catch (err) {
+    // handle unexpected error
+    handleError(res, { error: err });
+  }
+};
+
+/**
+ * controller to update a review
+ */
+export const updateReview = async (
+  req: ValidatedRequest<UpdateReviewReq>,
+  res: Response
+) => {
+  try {
+    //  destructure the validated request body
+    const { reviewId, message, rating } = req.validatedData!;
+
+    // update the review
+    const updatedReview = await Review.findByIdAndUpdate(
+      reviewId,
+      {
+        ...(message !== undefined && { message }),
+        ...(rating !== undefined && { rating }),
+      },
+      { new: true }
+    );
+
+    // check if the review was updated
+    if (!updatedReview) {
+      handleError(res, {
+        statusCode: 404,
+        message: 'Review not found',
+      });
+      return;
+    }
+
+    // send response with the updated review
+    res.status(200).json({
+      success: true,
+      data: updatedReview,
+      message: 'Review updated successfully',
     });
   } catch (err) {
     // handle unexpected error

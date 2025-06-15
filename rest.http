@@ -121,12 +121,26 @@ GET {{baseUrl}}/api/reviews
 GET {{baseUrl}}/api/reviews?full_details=false&start=0&limit=10
 
 ### all the reviews given to a user  (NOTE : default pagination only first 100 records are returned )
+GET {{baseUrl}}/api/reviews/for-user/6845924daee2a515b38a3b91
+
+### with full-details false ,  start and limit options
+
 GET {{baseUrl}}/api/reviews/for-user/6845924daee2a515b38a3b91?full_details=false&start=0&limit=10
 
 ### delete a review
-DELETE  {{baseUrl}}/api/reviews
+DELETE {{baseUrl}}/api/reviews
 Content-Type: application/json
 
 {
   "reviewId": "684ef32612ac8f522c79ed4b"
+}
+
+### update a review (message an rating can be optional but either one of them has to be provided)
+PATCH {{baseUrl}}/api/reviews
+Content-Type: application/json
+
+{
+  "reviewId": "684ef52fc9247ee1162912de",
+  "message": "Not that grate",
+  "rating": "1"
 }
