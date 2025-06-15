@@ -93,10 +93,10 @@ export const geUserReviews = async (
 export const getReviewForUser = async (req: Request, res: Response) => {
   try {
     // get the user id from params
-    const revieweeId = req.params?.revieweeId;
+    const userId = req.params?.userId;
 
     // validate if the revieweeId is a valid mongo id
-    if (!revieweeId || !Types.ObjectId.isValid(revieweeId)) {
+    if (!userId || !Types.ObjectId.isValid(userId)) {
       handleError(res, {
         statusCode: 400,
         message: 'Reviewee id is empty or invalid',
@@ -104,7 +104,7 @@ export const getReviewForUser = async (req: Request, res: Response) => {
       return;
     }
     // find the reviews  by reviewee id
-    const reviews = await Review.find({ revieweeId: revieweeId });
+    const reviews = await Review.find({ revieweeId: userId });
 
     //incase no reviews found
     if (reviews.length === 0) {

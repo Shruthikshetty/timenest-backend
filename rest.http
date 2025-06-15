@@ -117,6 +117,9 @@ Content-Type: application/json
 ### get all reviews by user 
 GET {{baseUrl}}/api/reviews
 
+### all the reviews given to a user 
+GET {{baseUrl}}/api/reviews/for-user/6845924daee2a515b38a3b91
+
 ### delete a review
 DELETE  {{baseUrl}}/api/reviews
 Content-Type: application/json

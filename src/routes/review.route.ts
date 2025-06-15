@@ -10,6 +10,7 @@ import {
   addReview,
   deleteReview,
   geUserReviews,
+  getReviewForUser,
 } from '../controllers/review.controller';
 import { addReviewValidationSchema } from '../commons/validation-schema/review/add-review';
 import { deleteReviewValidationSchema } from '../commons/validation-schema/review/delete-review';
@@ -37,6 +38,9 @@ router.delete(
 
 //Route to get all reviews by  user
 router.get('/', requireUser, geUserReviews);
+
+//Route to get all reviews for a  user
+router.get('/for-user/:userId', requireUser, getReviewForUser);
 
 // export all user routes clubbed
 export default router;
