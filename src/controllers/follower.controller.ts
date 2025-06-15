@@ -25,7 +25,7 @@ export const getFollowers = async (
     const populate = (req as unknown as Request).query.full_details === 'false';
 
     //find all the users that the user is following
-    const followers = await getFollowersWithOptions(_id as string, populate);
+    const followers = await getFollowersWithOptions(_id , populate);
 
     // incase no followers found
     if (followers.length === 0) {

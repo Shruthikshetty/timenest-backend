@@ -37,7 +37,7 @@ export const sendMessage = async (
 
     // Emit the message to the receiver and sender via Socket.io
     io.to(receiver.toString()).emit('receive_message', newMessage);
-    io.to((_id as string).toString()).emit('receive_message', newMessage); // sender
+    io.to(_id.toString()).emit('receive_message', newMessage); // sender
 
     // send response with the saved message
     res.status(201).json({

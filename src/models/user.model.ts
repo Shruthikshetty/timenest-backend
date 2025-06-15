@@ -2,7 +2,7 @@
  * @file Defines the User model schema for MongoDB using Mongoose.
  */
 
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, Types } from 'mongoose';
 import bcrypt from 'bcrypt';
 import { Patterns } from '../commons/constants/patterns';
 
@@ -10,6 +10,7 @@ import { Patterns } from '../commons/constants/patterns';
  * Interface for User document.
  */
 export interface IUser extends Document {
+  _id: Types.ObjectId;
   name: string;
   email: string;
   password: string;

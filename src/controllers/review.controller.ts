@@ -10,6 +10,7 @@ import { AddReviewReq } from '../commons/validation-schema/review/add-review';
 import { Types } from 'mongoose';
 import { DeleteReviewReq } from '../commons/validation-schema/review/delete-review';
 import { MongoServerError } from 'mongodb';
+import { getReviewsWithOptions } from '../commons/utils/getReviews';
 
 /**
  * This is a controller used to add a new review
@@ -67,8 +68,23 @@ export const geUserReviews = async (
     // get the validated user
     const user = req.user!;
 
+    // get start and limit from query params
+    const start =
+      parseInt((req as unknown as Request).query.start as string) || 0;
+    const limit =
+      parseInt((req as unknown as Request).query.limit as string) || 100;
+    // check if full details is required
+    const fullDetails =
+      (req as unknown as Request).query.full_details === 'false';
+
     // get the reviews for the user
-    const reviews = await Review.find({ reviewerId: user._id });
+    const reviews = await getReviewsWithOptions(
+      !fullDetails,
+      user._id,
+      'reviewer',
+      start,
+      limit
+    );
 
     //incase no reviews found
     if (reviews.length === 0) {
@@ -95,6 +111,15 @@ export const getReviewForUser = async (req: Request, res: Response) => {
     // get the user id from params
     const userId = req.params?.userId;
 
+    // get start and limit from query params
+    const start =
+      parseInt((req as unknown as Request).query.start as string) || 0;
+    const limit =
+      parseInt((req as unknown as Request).query.limit as string) || 100;
+    // check if full details is required
+    const fullDetails =
+      (req as unknown as Request).query.full_details === 'false';
+
     // validate if the revieweeId is a valid mongo id
     if (!userId || !Types.ObjectId.isValid(userId)) {
       handleError(res, {
@@ -104,7 +129,13 @@ export const getReviewForUser = async (req: Request, res: Response) => {
       return;
     }
     // find the reviews  by reviewee id
-    const reviews = await Review.find({ revieweeId: userId });
+    const reviews = await getReviewsWithOptions(
+      !fullDetails,
+      userId as unknown as Types.ObjectId,
+      'reviewee',
+      start,
+      limit
+    );
 
     //incase no reviews found
     if (reviews.length === 0) {

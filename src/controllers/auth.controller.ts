@@ -45,7 +45,7 @@ export const authenticateUser = async (
     // Generate JWT token using the util
     const { accessToken, refreshToken } = generateTokens({
       email,
-      userId: user._id as string,
+      userId: user._id.toString(),
     });
 
     // Log the new access token in dev mode (for debugging)

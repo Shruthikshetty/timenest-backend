@@ -109,16 +109,19 @@ POST {{baseUrl}}/api/reviews
 Content-Type: application/json
 
 {
-  "revieweeId": "6845924daee2a515b38a3b91",
+  "revieweeId": "684a9932d6e580cffafa6522",
   "message": "best mentor great !!",
   "rating": "5"
 }
 
-### get all reviews by user 
+### get all reviews by user   (NOTE : default pagination only first 100 records are returned )
 GET {{baseUrl}}/api/reviews
 
-### all the reviews given to a user 
-GET {{baseUrl}}/api/reviews/for-user/6845924daee2a515b38a3b91
+### with full-details false ,  start and limit options
+GET {{baseUrl}}/api/reviews?full_details=false&start=0&limit=10
+
+### all the reviews given to a user  (NOTE : default pagination only first 100 records are returned )
+GET {{baseUrl}}/api/reviews/for-user/6845924daee2a515b38a3b91?full_details=false&start=0&limit=10
 
 ### delete a review
 DELETE  {{baseUrl}}/api/reviews

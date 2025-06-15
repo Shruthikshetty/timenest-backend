@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import Follower from '../../models/follower';
 
 /**
@@ -8,7 +9,7 @@ import Follower from '../../models/follower';
  * @returns A Promise that resolves to an array of followers.
  */
 
-export async function getFollowersWithOptions(userId: string, populate = true) {
+export async function getFollowersWithOptions(userId: Types.ObjectId, populate = true) {
   if (!populate) {
     return await Follower.find({ user: userId })
       .select('-__v')
