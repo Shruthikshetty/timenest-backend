@@ -69,6 +69,12 @@ export const UpdateUserValidationSchema: Schema = {
     },
     toFloat: true,
   },
+  mentor: {
+    optional: true,
+    isBoolean: {
+      errorMessage: 'Mentor must be a boolean',
+    },
+  },
   designation: {
     optional: true,
     isString: {
