@@ -89,6 +89,7 @@ export const io = new Server(server, {
   cors: corsOptions,
 });
 
+//@TODO add auth for this socket
 io.on('connection', (socket) => {
   const userId = socket.handshake.query.userId as string;
   if (userId) {

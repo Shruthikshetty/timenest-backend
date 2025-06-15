@@ -52,6 +52,8 @@ Content-Type: application/json
 {}
 
 ##### ---------------------------------------------- MESSAGE ----------------------------------------------------------- 
+## connect socket for real time experience to the base route pass userId as a query param (auth is not added for this yet)
+## listen to receive_message event its emitted when ever a new message is sent 
 
 ### send message 
 POST {{baseUrl}}/api/messages
