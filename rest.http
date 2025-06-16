@@ -191,3 +191,14 @@ Content-Type: application/json
 }
 
 ## ---------------------------------------------- USER_TASK  ------------------------------------------------------
+
+### get all the user tasks 
+GET {{baseUrl}}/api/user-tasks
+
+### add a new user task 
+POST {{baseUrl}}/api/user-tasks
+Content-Type: application/json
+
+{
+  "taskId":"685002cf56195e1cea8d325a"
+}

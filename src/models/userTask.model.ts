@@ -22,6 +22,8 @@ const userTaskSchema = new mongoose.Schema(
     },
     rating: {
       type: Number,
+      min: 0,
+      max: 5,
       default: 0,
     },
     status: {
@@ -39,7 +41,7 @@ const userTaskSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-// Add compound unique index 
+// Add compound unique index
 // user can and a task only once (prevents duplicate entry)
 userTaskSchema.index(
   { userId: 1, taskId: 1 },
@@ -52,6 +54,8 @@ userTaskSchema.index(
   }
 );
 
+// create a model from the schema
 const UserTask = mongoose.model('UserTask', userTaskSchema);
 
-module.exports = UserTask;
+// export the model
+export default UserTask;
