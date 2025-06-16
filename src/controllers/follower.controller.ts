@@ -4,7 +4,7 @@
 import { Response, Request } from 'express';
 import { handleError } from '../commons/utils/handleError';
 import { ValidatedRequest } from '../types/custom-types';
-import Follower from '../models/follower';
+import Follower from '../models/follower.model';
 import { AddFollowerReq } from '../commons/validation-schema/follower/add-follower';
 import { getFollowersWithOptions } from '../commons/utils/getFollowers';
 import User from '../models/user.model';

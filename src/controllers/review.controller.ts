@@ -4,7 +4,7 @@
 
 import { Response, Request } from 'express';
 import { handleError } from '../commons/utils/handleError';
-import Review from '../models/review';
+import Review from '../models/review.model';
 import { ValidatedRequest } from '../types/custom-types';
 import { AddReviewReq } from '../commons/validation-schema/review/add-review';
 import { Types } from 'mongoose';

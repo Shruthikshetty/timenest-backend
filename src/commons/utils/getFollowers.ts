@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import Follower from '../../models/follower';
+import Follower from '../../models/follower.model';
 
 /**
  * Retrieves a list of followers for a given user.

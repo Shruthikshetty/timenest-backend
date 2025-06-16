@@ -6,7 +6,7 @@ import { Response, Request } from 'express';
 import { ValidatedRequest } from '../types/custom-types';
 import { handleError } from '../commons/utils/handleError';
 import { SendMessageReq } from '../commons/validation-schema/message/add-message';
-import Message, { IMessage } from '../models/message';
+import Message, { IMessage } from '../models/message.model';
 import { MessageLimits } from '../commons/constants/logic.constants';
 import { io } from '../index';
 

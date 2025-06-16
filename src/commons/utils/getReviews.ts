@@ -1,5 +1,5 @@
 import { Types } from 'mongoose';
-import Review from '../../models/review';
+import Review from '../../models/review.model';
 
 /**
  * @function getReviewsWithOptions
