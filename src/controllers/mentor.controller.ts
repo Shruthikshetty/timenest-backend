@@ -93,3 +93,25 @@ export const getMentorById = async (
     handleError(res, { error: err });
   }
 };
+
+/**
+ * Controller to get count of total mentors
+ */
+
+export const getMentorCount = async (_: Request, res: Response) => {
+  try {
+    // get the count of mentors from Users model
+    const count = await User.countDocuments({ mentor: true }).exec();
+
+    // send response with the count of mentors
+    res.status(200).json({
+      success: true,
+      data: {
+        count: count,
+      },
+    });
+  } catch (err) {
+    // handle unexpected error
+    handleError(res, { error: err });
+  }
+};
