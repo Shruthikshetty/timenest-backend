@@ -1,4 +1,5 @@
 import mongoose, { Types, Document } from 'mongoose';
+import { TaskDisplayMediaTypes } from '../commons/constants/model.constants';
 
 //Interface
 export interface ITask extends Document {
@@ -36,6 +37,11 @@ const taskSchema = new mongoose.Schema(
     displayMedia: {
       type: String,
     }, // URI for image or video
+    displayMediaType: {
+      type: String,
+      enum: TaskDisplayMediaTypes,
+      default: 'image',
+    },
   },
   { timestamps: true }
 );

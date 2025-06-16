@@ -165,3 +165,16 @@ GET {{baseUrl}}/api/mentors/count
 
 ### get all tasks 
 GET {{baseUrl}}/api/tasks
+
+### add a new task  (timeToComplete to be in minutes and whole number)
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "title": "Introduction to Node.js",
+  "description": "A beginner-friendly course on building backend applications using Node.js.",
+  "category": "Programming",
+  "timeToComplete": 120,
+  "displayMedia": "https://i.imgur.com/TA6fMfY.jpeg",
+  "displayMediaType": "image"
+}

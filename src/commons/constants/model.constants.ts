@@ -3,3 +3,6 @@
  */
 
 export const MessageTypes = ['text', 'image'];
+
+// display media types used in Task model
+export const TaskDisplayMediaTypes = ['image', 'video'];
