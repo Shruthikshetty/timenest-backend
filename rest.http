@@ -151,3 +151,9 @@ Content-Type: application/json
 
 ### get all mentors
 GET {{baseUrl}}/api/mentors
+
+### get mentors with filter  (default pagination first 100 records are returned) 
+GET {{baseUrl}}/api/mentors?start=0&limit=1
+
+### get mentors by id (this is nothing but user id , _id)
+GET {{baseUrl}}/api/mentors/684fb5eda88b2fa17dc18728
