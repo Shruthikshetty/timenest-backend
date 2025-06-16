@@ -9,6 +9,7 @@ import authRoute from './auth.route';
 import messageRoute from './message.route';
 import followerRoute from './follower.route';
 import reviewRoute from './review.route';
+import mentorRoutes from './mentor.route';
 
 // Initialize the main router
 const router = Router();
@@ -34,6 +35,10 @@ router.use('/followers', followerRoute);
  * Mount all the Review routes "/reviews"
  */
 router.use('/reviews', reviewRoute);
+/**
+ * Mount all the mentor routes "/mentors"
+ */
+router.use('/mentors', mentorRoutes);
 /**
  * Export the combined router to be used in the main app.
  */

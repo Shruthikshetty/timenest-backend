@@ -12,6 +12,7 @@ export type UpdateUserReq = {
   task?: number;
   ratings?: number;
   designation?: string;
+  mentor?: boolean;
 };
 
 // schema

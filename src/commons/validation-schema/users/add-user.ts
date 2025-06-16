@@ -12,6 +12,7 @@ export interface AddUserReq {
   designation: string;
   task?: number; // optional, as it has a default in the DB
   ratings?: number; // optional, as it has a default in the DB
+  mentor?: boolean;
 }
 
 /***
@@ -31,7 +32,12 @@ export const AddUserValidationSchema: Schema = {
     },
     trim: true,
   },
-
+  mentor: {
+    optional: true,
+    isBoolean: {
+      errorMessage: 'Mentor must be a boolean',
+    },
+  },
   email: {
     isString: {
       errorMessage: 'Email must be a string',
