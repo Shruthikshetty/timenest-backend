@@ -4,7 +4,7 @@ import User from '../../models/user.model';
 import { handleError } from '../utils/handleError';
 
 /**
- *
+ * Only admin can access this route
  * @param req request object
  * @param res response object
  * @param next next function to call the next middleware

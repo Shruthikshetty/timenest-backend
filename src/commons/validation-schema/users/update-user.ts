@@ -12,6 +12,7 @@ export type UpdateUserReq = {
   task?: number;
   ratings?: number;
   designation?: string;
+  mentor?: boolean;
 };
 
 // schema
@@ -68,6 +69,12 @@ export const UpdateUserValidationSchema: Schema = {
       errorMessage: 'Ratings must be between 0 and 5',
     },
     toFloat: true,
+  },
+  mentor: {
+    optional: true,
+    isBoolean: {
+      errorMessage: 'Mentor must be a boolean',
+    },
   },
   designation: {
     optional: true,

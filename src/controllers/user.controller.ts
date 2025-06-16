@@ -37,8 +37,15 @@ export const addUser = async (
   res: Response
 ) => {
   // extract details from the validated data
-  const { name, email, password, designation, task, ratings } =
-    req.validatedData!; // will not be null
+  const {
+    name,
+    email,
+    password,
+    designation,
+    task,
+    ratings,
+    mentor = false,
+  } = req.validatedData!; // will not be null
 
   try {
     const existingUser = await User.findOne({
@@ -59,6 +66,7 @@ export const addUser = async (
       designation,
       task,
       ratings,
+      mentor,
     });
 
     await newUser.save();

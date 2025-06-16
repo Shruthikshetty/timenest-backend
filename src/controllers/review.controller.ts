@@ -4,12 +4,14 @@
 
 import { Response, Request } from 'express';
 import { handleError } from '../commons/utils/handleError';
-import Review from '../models/review';
+import Review from '../models/review.model';
 import { ValidatedRequest } from '../types/custom-types';
 import { AddReviewReq } from '../commons/validation-schema/review/add-review';
 import { Types } from 'mongoose';
 import { DeleteReviewReq } from '../commons/validation-schema/review/delete-review';
 import { MongoServerError } from 'mongodb';
+import { getReviewsWithOptions } from '../commons/utils/getReviews';
+import { UpdateReviewReq } from '../commons/validation-schema/review/update-review';
 
 /**
  * This is a controller used to add a new review
@@ -67,8 +69,23 @@ export const geUserReviews = async (
     // get the validated user
     const user = req.user!;
 
+    // get start and limit from query params
+    const start =
+      parseInt((req as unknown as Request).query.start as string) || 0;
+    const limit =
+      parseInt((req as unknown as Request).query.limit as string) || 100;
+    // check if full details is required
+    const fullDetails =
+      (req as unknown as Request).query.full_details === 'false';
+
     // get the reviews for the user
-    const reviews = await Review.find({ reviewerId: user._id });
+    const reviews = await getReviewsWithOptions(
+      !fullDetails,
+      user._id,
+      'reviewer',
+      start,
+      limit
+    );
 
     //incase no reviews found
     if (reviews.length === 0) {
@@ -95,6 +112,15 @@ export const getReviewForUser = async (req: Request, res: Response) => {
     // get the user id from params
     const userId = req.params?.userId;
 
+    // get start and limit from query params
+    const start =
+      parseInt((req as unknown as Request).query.start as string) || 0;
+    const limit =
+      parseInt((req as unknown as Request).query.limit as string) || 100;
+    // check if full details is required
+    const fullDetails =
+      (req as unknown as Request).query.full_details === 'false';
+
     // validate if the revieweeId is a valid mongo id
     if (!userId || !Types.ObjectId.isValid(userId)) {
       handleError(res, {
@@ -104,7 +130,13 @@ export const getReviewForUser = async (req: Request, res: Response) => {
       return;
     }
     // find the reviews  by reviewee id
-    const reviews = await Review.find({ revieweeId: userId });
+    const reviews = await getReviewsWithOptions(
+      !fullDetails,
+      userId as unknown as Types.ObjectId,
+      'reviewee',
+      start,
+      limit
+    );
 
     //incase no reviews found
     if (reviews.length === 0) {
@@ -152,6 +184,48 @@ export const deleteReview = async (
       success: true,
       data: deletedReview,
       message: 'Review deleted successfully',
+    });
+  } catch (err) {
+    // handle unexpected error
+    handleError(res, { error: err });
+  }
+};
+
+/**
+ * controller to update a review
+ */
+export const updateReview = async (
+  req: ValidatedRequest<UpdateReviewReq>,
+  res: Response
+) => {
+  try {
+    //  destructure the validated request body
+    const { reviewId, message, rating } = req.validatedData!;
+
+    // update the review
+    const updatedReview = await Review.findByIdAndUpdate(
+      reviewId,
+      {
+        ...(message !== undefined && { message }),
+        ...(rating !== undefined && { rating }),
+      },
+      { new: true }
+    );
+
+    // check if the review was updated
+    if (!updatedReview) {
+      handleError(res, {
+        statusCode: 404,
+        message: 'Review not found',
+      });
+      return;
+    }
+
+    // send response with the updated review
+    res.status(200).json({
+      success: true,
+      data: updatedReview,
+      message: 'Review updated successfully',
     });
   } catch (err) {
     // handle unexpected error

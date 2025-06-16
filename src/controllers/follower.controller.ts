@@ -4,7 +4,7 @@
 import { Response, Request } from 'express';
 import { handleError } from '../commons/utils/handleError';
 import { ValidatedRequest } from '../types/custom-types';
-import Follower from '../models/follower';
+import Follower from '../models/follower.model';
 import { AddFollowerReq } from '../commons/validation-schema/follower/add-follower';
 import { getFollowersWithOptions } from '../commons/utils/getFollowers';
 import User from '../models/user.model';
@@ -25,7 +25,7 @@ export const getFollowers = async (
     const populate = (req as unknown as Request).query.full_details === 'false';
 
     //find all the users that the user is following
-    const followers = await getFollowersWithOptions(_id as string, populate);
+    const followers = await getFollowersWithOptions(_id , populate);
 
     // incase no followers found
     if (followers.length === 0) {

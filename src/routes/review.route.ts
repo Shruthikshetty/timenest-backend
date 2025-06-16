@@ -11,9 +11,11 @@ import {
   deleteReview,
   geUserReviews,
   getReviewForUser,
+  updateReview,
 } from '../controllers/review.controller';
 import { addReviewValidationSchema } from '../commons/validation-schema/review/add-review';
 import { deleteReviewValidationSchema } from '../commons/validation-schema/review/delete-review';
+import { updateReviewValidationSchema } from '../commons/validation-schema/review/update-review';
 
 //initialize Router
 const router = Router();
@@ -27,7 +29,7 @@ router.post(
   addReview
 );
 
-//Route to delete a review
+// Route to delete a review
 router.delete(
   '/',
   requireUser,
@@ -36,11 +38,20 @@ router.delete(
   deleteReview
 );
 
-//Route to get all reviews by  user
-router.get('/', requireUser, geUserReviews);
+// Route to get all reviews by  user
+router.get('/by', requireUser, geUserReviews);
 
-//Route to get all reviews for a  user
-router.get('/for-user/:userId', requireUser, getReviewForUser);
+// Route to get all reviews for a  user
+router.get('/for/:userId', requireUser, getReviewForUser);
+
+// update a review
+router.patch(
+  '/',
+  requireUser,
+  checkSchema(updateReviewValidationSchema),
+  validate,
+  updateReview
+);
 
 // export all user routes clubbed
 export default router;
