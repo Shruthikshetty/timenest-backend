@@ -71,12 +71,12 @@ export const geUserReviews = async (
 
     // get start and limit from query params
     const start =
-      parseInt((req as unknown as Request).query.start as string) || 0;
+      parseInt((req as unknown as Request).query?.start as string) || 0;
     const limit =
-      parseInt((req as unknown as Request).query.limit as string) || 100;
+      parseInt((req as unknown as Request).query?.limit as string) || 100;
     // check if full details is required
     const fullDetails =
-      (req as unknown as Request).query.full_details === 'false';
+      (req as unknown as Request).query?.full_details === 'false';
 
     // get the reviews for the user
     const reviews = await getReviewsWithOptions(

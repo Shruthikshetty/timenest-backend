@@ -7,14 +7,27 @@ import { Request, Response } from 'express';
 import Task from '../models/task.model';
 import { ValidatedRequest } from '../types/custom-types';
 import { AddTaskReq } from '../commons/validation-schema/task/add-task';
+import { getTaskWithOptions } from '../commons/utils/getTasks';
 
 /**
  * controller to get task's
  */
-export const getTasks = async (_: Request, res: Response) => {
+export const getTasks = async (req: Request, res: Response) => {
   try {
+    // get the limit , start and full_details from query params
+    const start = parseInt(
+      (req as unknown as Request).query?.start as string,
+      10
+    );
+    const limit = parseInt(
+      (req as unknown as Request).query?.limit as string,
+      10
+    );
+
+    const fullDetails =
+      (req as unknown as Request).query?.full_details === 'false';
     // get all tasks
-    const tasks = await Task.find().lean().exec();
+    const tasks = await getTaskWithOptions(!fullDetails, start, limit);
     // if no task found
     if (!tasks || tasks.length === 0) {
       handleError(res, { statusCode: 404, message: 'No tasks found' });
