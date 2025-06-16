@@ -115,3 +115,10 @@ export const getMentorCount = async (_: Request, res: Response) => {
     handleError(res, { error: err });
   }
 };
+
+//@TODO recent mentor to be implemented 
+// const recentMentorSchema = new mongoose.Schema({
+//   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+//   mentorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Mentor' },
+//   viewedAt: { type: Date, default: Date.now }
+// });

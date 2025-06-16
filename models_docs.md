@@ -78,4 +78,3 @@ Here are the models in a table structure for visualization:
 | createdAt | Date | Timestamp for when the follower was created |
 | updatedAt | Date | Timestamp for when the follower was last updated |
 
-
