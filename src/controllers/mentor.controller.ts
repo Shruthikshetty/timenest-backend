@@ -55,7 +55,7 @@ export const getMentorById = async (
 ) => {
   try {
     // get the mentor id from params
-    const { mentorId } = req.params;
+    const { mentorId } = (req as unknown as Request).params;
 
     // validate if the mentor id is a valid mongo id
     if (!mentorId || !Types.ObjectId.isValid(mentorId)) {
