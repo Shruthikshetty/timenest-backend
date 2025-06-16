@@ -8,6 +8,7 @@ import Task from '../models/task.model';
 import { ValidatedRequest } from '../types/custom-types';
 import { AddTaskReq } from '../commons/validation-schema/task/add-task';
 import { getTaskWithOptions } from '../commons/utils/getTasks';
+import { DeleteTaskReq } from '../commons/validation-schema/task/delete-task';
 
 /**
  * controller to get task's
@@ -77,6 +78,34 @@ export const addTask = async (
     res.status(200).json({ success: true, data: task });
   } catch (err) {
     // catch any errors
+    handleError(res, { error: err });
+  }
+};
+
+/**
+ * Delete a task by task id
+ */
+export const deleteTask = async (
+  req: ValidatedRequest<DeleteTaskReq>,
+  res: Response
+) => {
+  try {
+    // get the task id from validated request body
+    const { taskId } = req.validatedData!;
+
+    // delete the task
+    const deletedTask = await Task.findByIdAndDelete(taskId);
+
+    // if task is not found
+    if (!deletedTask) {
+      handleError(res, { statusCode: 404, message: 'Task not found' });
+      return;
+    }
+
+    // send response with the deleted task
+    res.status(200).json({ success: true, data: deletedTask });
+  } catch (err) {
+    //handle unexpected error
     handleError(res, { error: err });
   }
 };

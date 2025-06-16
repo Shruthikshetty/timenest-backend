@@ -181,3 +181,11 @@ Content-Type: application/json
   "displayMedia": "https://i.imgur.com/TA6fMfY.jpeg",
   "displayMediaType": "image"
 }
+
+### delete a task by the taskId (_id)
+DELETE  {{baseUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "taskId":"685002cf56195e1cea8d325a"
+}
