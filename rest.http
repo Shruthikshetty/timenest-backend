@@ -37,8 +37,8 @@ POST {{baseUrl}}/api/auth
 Content-Type: application/json
 
 {
-  "email": "sophia.g@gmail.com",
-  "password": "SophiaSafe987"
+  "email": "john.doe@example.com",
+  "password": "Password123"
 }
 
 ### endpoint to get a new jwt token using the refresh token
@@ -104,7 +104,7 @@ Content-Type: application/json
   "following": "6845924daee2a515b38a3b91"
 }
 
-##### ---------------------------------------------- Reviews ----------------------------------------------------------- 
+##### ---------------------------------------------- Reviews (user)----------------------------------------------------------- 
 
 ### add a new  review 
 POST {{baseUrl}}/api/reviews
@@ -112,22 +112,22 @@ Content-Type: application/json
 
 {
   "revieweeId": "684a9932d6e580cffafa6522",
-  "message": "best mentor great !!",
+  "message": "good ok",
   "rating": "5"
 }
 
 ### get all reviews by user   (NOTE : default pagination only first 100 records are returned )
-GET {{baseUrl}}/api/reviews
+GET {{baseUrl}}/api/reviews/by
 
 ### with full-details false ,  start and limit options
-GET {{baseUrl}}/api/reviews?full_details=false&start=0&limit=10
+GET {{baseUrl}}/api/reviews/by?full_details=false&start=0&limit=10
 
 ### all the reviews given to a user  (NOTE : default pagination only first 100 records are returned )
-GET {{baseUrl}}/api/reviews/for-user/6845924daee2a515b38a3b91
+GET {{baseUrl}}/api/reviews/for/6845924daee2a515b38a3b91
 
 ### with full-details false ,  start and limit options
 
-GET {{baseUrl}}/api/reviews/for-user/6845924daee2a515b38a3b91?full_details=false&start=0&limit=10
+GET {{baseUrl}}/api/reviews/for/6845924daee2a515b38a3b91?full_details=false&start=0&limit=10
 
 ### delete a review
 DELETE {{baseUrl}}/api/reviews

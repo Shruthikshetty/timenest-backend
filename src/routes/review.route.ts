@@ -39,10 +39,10 @@ router.delete(
 );
 
 // Route to get all reviews by  user
-router.get('/', requireUser, geUserReviews);
+router.get('/by', requireUser, geUserReviews);
 
 // Route to get all reviews for a  user
-router.get('/for-user/:userId', requireUser, getReviewForUser);
+router.get('/for/:userId', requireUser, getReviewForUser);
 
 // update a review
 router.patch(
