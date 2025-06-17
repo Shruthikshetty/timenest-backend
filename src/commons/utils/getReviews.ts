@@ -22,7 +22,7 @@ export const getReviewsWithOptions = (
   if (isNaN(start) || start < 0) {
     start = 0;
   }
-  if (isNaN(limit) || limit < start) {
+  if (isNaN(limit) || limit < 0) {
     limit = 100;
   }
   // return the reviews based on the type

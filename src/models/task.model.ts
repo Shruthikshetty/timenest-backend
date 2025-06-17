@@ -5,6 +5,7 @@ import { TaskDisplayMediaTypes } from '../commons/constants/model.constants';
 export interface ITask extends Document {
   _id: Types.ObjectId;
   title: string;
+  createdBy: Types.ObjectId;
   description: string;
   category: string;
   timeToComplete: number;

@@ -163,18 +163,42 @@ GET {{baseUrl}}/api/mentors/count
 
 ## ---------------------------------------------- TASK  ------------------------------------------------------
 
-### get all tasks 
+### get all tasks (default pagination first 100 records)
 GET {{baseUrl}}/api/tasks
+
+### with start , limit , full_details option
+GET {{baseUrl}}/api/tasks?full_details=false&start=0&limit=1
 
 ### add a new task  (timeToComplete to be in minutes and whole number)
 POST {{baseUrl}}/api/tasks
 Content-Type: application/json
 
 {
-  "title": "Introduction to Node.js",
+  "title": "Introduction to Node.js version 2",
   "description": "A beginner-friendly course on building backend applications using Node.js.",
   "category": "Programming",
   "timeToComplete": 120,
   "displayMedia": "https://i.imgur.com/TA6fMfY.jpeg",
   "displayMediaType": "image"
+}
+
+### delete a task by the taskId (_id)
+DELETE  {{baseUrl}}/api/tasks
+Content-Type: application/json
+
+{
+  "taskId":"685002cf56195e1cea8d325a"
+}
+
+## ---------------------------------------------- USER_TASK  ------------------------------------------------------
+
+### get all the user tasks 
+GET {{baseUrl}}/api/user-tasks
+
+### add a new user task 
+POST {{baseUrl}}/api/user-tasks
+Content-Type: application/json
+
+{
+  "taskId":"685002cf56195e1cea8d325a"
 }

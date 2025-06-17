@@ -1,7 +1,6 @@
 /**
  * @file the type and schema for the add review request body
  */
-
 import { Schema } from 'express-validator';
 
 // type
@@ -31,9 +30,9 @@ export const addReviewValidationSchema: Schema = {
     notEmpty: {
       errorMessage: 'Rating is required   ',
     },
-    isLength: {
-      options: { min: 1, max: 5 },
-      errorMessage: 'Rating should be between 1 and 5',
+    isInt: {
+      options: { min: 0, max: 5 },
+      errorMessage: 'Rating should be an integer between 0 and 5',
     },
     isNumeric: {
       errorMessage: 'Rating should be a number',

@@ -15,7 +15,7 @@ export type AddTaskReq = {
 };
 
 //schema...
-export const addTaskValidationSchema: Schema = {
+export const AddTaskValidationSchema: Schema = {
   title: {
     notEmpty: {
       errorMessage: 'Title is required',

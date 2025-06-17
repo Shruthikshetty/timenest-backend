@@ -11,6 +11,7 @@ import followerRoute from './follower.route';
 import reviewRoute from './review.route';
 import mentorRoute from './mentor.route';
 import taskRoute from './task.route';
+import userTaskRoute from './user-task.route';
 
 // Initialize the main router
 const router = Router();
@@ -44,6 +45,10 @@ router.use('/mentors', mentorRoute);
  * Mount all the task routes "/tasks"
  */
 router.use('/tasks', taskRoute);
+/**
+ * Mount all user task routes "/user-tasks"
+ */
+router.use('/user-tasks', userTaskRoute);
 /**
  * Export the combined router to be used in the main app.
  */

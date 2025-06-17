@@ -9,9 +9,9 @@ import { ValidatedRequest } from '../types/custom-types';
 import { AddReviewReq } from '../commons/validation-schema/review/add-review';
 import { Types } from 'mongoose';
 import { DeleteReviewReq } from '../commons/validation-schema/review/delete-review';
-import { MongoServerError } from 'mongodb';
 import { getReviewsWithOptions } from '../commons/utils/getReviews';
 import { UpdateReviewReq } from '../commons/validation-schema/review/update-review';
+import { isDuplicateKeyError } from '../commons/utils/mongo-errors';
 
 /**
  * This is a controller used to add a new review
@@ -44,7 +44,7 @@ export const addReview = async (
     });
   } catch (err: unknown) {
     // handle unexpected error
-    if ((err as MongoServerError)?.errorResponse?.code === 11000) {
+    if (isDuplicateKeyError(err)) {
       // in case the error is a duplicate key error
       handleError(res, {
         error: err,
@@ -71,12 +71,12 @@ export const geUserReviews = async (
 
     // get start and limit from query params
     const start =
-      parseInt((req as unknown as Request).query.start as string) || 0;
+      parseInt((req as unknown as Request).query?.start as string) || 0;
     const limit =
-      parseInt((req as unknown as Request).query.limit as string) || 100;
+      parseInt((req as unknown as Request).query?.limit as string) || 100;
     // check if full details is required
     const fullDetails =
-      (req as unknown as Request).query.full_details === 'false';
+      (req as unknown as Request).query?.full_details === 'false';
 
     // get the reviews for the user
     const reviews = await getReviewsWithOptions(

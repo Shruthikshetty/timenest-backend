@@ -1,7 +1,7 @@
 /**
  * @file the type and schema for the update review request body
  */
-
+//@TODO check rating validation might be wrong
 import { Schema } from 'express-validator';
 import { Types } from 'mongoose';
 
@@ -30,12 +30,9 @@ export const updateReviewValidationSchema: Schema = {
   },
   rating: {
     optional: true,
-    isLength: {
-      options: { min: 1, max: 5 },
-      errorMessage: 'Rating should be between 1 and 5',
-    },
-    isNumeric: {
-      errorMessage: 'Rating should be a number',
+    isInt: {
+      options: { min: 0, max: 5 },
+      errorMessage: 'Not a Integer | Rating should be an integer between 0 and 5',
     },
   },
   _: {
