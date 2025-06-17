@@ -29,7 +29,7 @@ export const getTaskWithOptions = (
         .populate({
           path: 'createdBy',
           select: '-__v -role -password -createdAt -updatedAt',
-          model: 'User'
+          model: 'User',
         })
         .select('-__v')
         .lean()

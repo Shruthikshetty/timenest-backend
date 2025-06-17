@@ -32,7 +32,8 @@ export const updateReviewValidationSchema: Schema = {
     optional: true,
     isInt: {
       options: { min: 0, max: 5 },
-      errorMessage: 'Not a Integer | Rating should be an integer between 0 and 5',
+      errorMessage:
+        'Not a Integer | Rating should be an integer between 0 and 5',
     },
   },
   _: {

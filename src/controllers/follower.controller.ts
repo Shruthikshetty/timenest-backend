@@ -25,7 +25,7 @@ export const getFollowers = async (
     const populate = (req as unknown as Request).query.full_details === 'false';
 
     //find all the users that the user is following
-    const followers = await getFollowersWithOptions(_id , populate);
+    const followers = await getFollowersWithOptions(_id, populate);
 
     // incase no followers found
     if (followers.length === 0) {
@@ -77,13 +77,11 @@ export const addFollower = async (
     const savedFollower = await newFollower.save();
 
     // send response with the saved follower
-    res
-      .status(200)
-      .json({
-        success: true,
-        data: savedFollower,
-        message: 'Follower added successfully',
-      });
+    res.status(200).json({
+      success: true,
+      data: savedFollower,
+      message: 'Follower added successfully',
+    });
   } catch (err) {
     // catch any errors
     handleError(res, { error: err });
