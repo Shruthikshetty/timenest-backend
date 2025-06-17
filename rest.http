@@ -209,4 +209,4 @@ Content-Type: application/json
 ### Create a new POST request tab.
 ### body -> form data -> key = image , select file 
 ### file to not be more than 1MB
-POST http://localhost:3000/api/uploads/image
+POST {{baseUrl}}/api/uploads/image
