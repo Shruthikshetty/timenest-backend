@@ -116,7 +116,7 @@ export const getMentorCount = async (_: Request, res: Response) => {
   }
 };
 
-//@TODO recent mentor to be implemented 
+//@TODO recent mentor to be implemented
 // const recentMentorSchema = new mongoose.Schema({
 //   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 //   mentorId: { type: mongoose.Schema.Types.ObjectId, ref: 'Mentor' },
