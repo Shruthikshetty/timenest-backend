@@ -202,3 +202,11 @@ Content-Type: application/json
 {
   "taskId":"685002cf56195e1cea8d325a"
 }
+
+## ---------------------------------------------- UPLOADS ----------------------------------------
+
+### Upload an image do this in postman 
+### Create a new POST request tab.
+### body -> form data -> key = image , select file 
+### file to not be more than 1MB
+POST http://localhost:3000/api/uploads/image
