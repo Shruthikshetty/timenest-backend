@@ -8,6 +8,7 @@ import { ValidatedRequest } from '../types/custom-types';
 import { AddUserTaskReq } from '../commons/validation-schema/user-task/add-user-task';
 import UserTask from '../models/userTask.model';
 import { isDuplicateKeyError } from '../commons/utils/mongo-errors';
+import { UpdateUserTaskReq } from '../commons/validation-schema/user-task/update-user-task';
 
 /**
  * controller to add a task to user tasks
@@ -58,6 +59,38 @@ export const getUserTasks = async (
     }
     // send response with the user tasks
     res.status(200).json({ success: true, data: userTasks });
+  } catch (err) {
+    //handle unexpected error
+    handleError(res, { error: err });
+  }
+};
+
+/**
+ * controller to update a user task
+ */
+export const updateUserTask = async (
+  req: ValidatedRequest<UpdateUserTaskReq>,
+  res: Response
+) => {
+  try {
+    // get the user task id
+    const { userTaskId } = req.validatedData!;
+
+    // update the user task
+    const updatedUserTask = await UserTask.findByIdAndUpdate(
+      userTaskId,
+      req.validatedData!,
+      { new: true }
+    );
+
+    // if no user task found
+    if (!updatedUserTask) {
+      handleError(res, { statusCode: 404, message: 'User task not found' });
+      return;
+    }
+
+    // send response with the updated user task
+    res.status(200).json({ success: true, data: updatedUserTask });
   } catch (err) {
     //handle unexpected error
     handleError(res, { error: err });

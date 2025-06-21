@@ -1,26 +1,26 @@
 /**
- * @file contains all the type and validation schema for add user task request body
+ * @file contains all the type and validation schema for updating user task request body
  */
 
 import { Schema } from 'express-validator';
 import { TaskProgressTypes } from '../../constants/model.constants';
 
 //type
-export type AddUserTaskReq = {
-  taskId: string;
+export type UpdateUserTaskReq = {
+  userTaskId: string;
   progress?: number;
   rating?: number;
   status?: 'planned' | 'in-progress' | 'complete' | 'quit';
 };
 
 // schema
-export const AddUserTaskValidationSchema: Schema = {
-  taskId: {
+export const UpdateUserTaskValidationSchema: Schema = {
+  userTaskId: {
     notEmpty: {
-      errorMessage: 'Task ref id is required',
+      errorMessage: 'UserTask ref id is required',
     },
     isMongoId: {
-      errorMessage: 'Task ref id is  invalid',
+      errorMessage: 'UserTask id is  invalid',
     },
   },
   progress: {

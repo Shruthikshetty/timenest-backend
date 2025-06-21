@@ -203,6 +203,15 @@ Content-Type: application/json
   "taskId":"685002cf56195e1cea8d325a"
 }
 
+### update a user task
+PATCH {{baseUrl}}/api/user-tasks
+Content-Type: application/json
+
+{
+  "userTaskId":"6850168765f4ca6300ad5a3e",
+  "status": "quit"
+}
+
 ## ---------------------------------------------- UPLOADS ----------------------------------------
 
 ### Upload an image do this in postman 

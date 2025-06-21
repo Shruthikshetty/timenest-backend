@@ -3,6 +3,7 @@
  */
 
 import { Schema } from 'express-validator';
+import { TaskDisplayMediaTypes } from '../../constants/model.constants';
 
 //type...
 export type AddTaskReq = {
@@ -57,7 +58,7 @@ export const AddTaskValidationSchema: Schema = {
   displayMediaType: {
     optional: true,
     isIn: {
-      options: ['image', 'video'],
+      options: [TaskDisplayMediaTypes],
       errorMessage: 'Display media type can only be image or video',
     },
   },

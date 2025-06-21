@@ -4,10 +4,15 @@
 
 import { Router } from 'express';
 import { requireUser } from '../commons/middlewares/authorizeUser';
-import { getUserTasks, addUserTask } from '../controllers/user-task.controller';
+import {
+  getUserTasks,
+  addUserTask,
+  updateUserTask,
+} from '../controllers/user-task.controller';
 import { checkSchema } from 'express-validator';
 import { validate } from '../commons/middlewares/validationHandler';
 import { AddUserTaskValidationSchema } from '../commons/validation-schema/user-task/add-user-task';
+import { UpdateUserTaskValidationSchema } from '../commons/validation-schema/user-task/update-user-task';
 
 //initializer router
 const router = Router();
@@ -22,6 +27,15 @@ router.post(
   checkSchema(AddUserTaskValidationSchema),
   validate,
   addUserTask
+);
+
+//update user task
+router.patch(
+  '/',
+  requireUser,
+  checkSchema(UpdateUserTaskValidationSchema),
+  validate,
+  updateUserTask
 );
 
 // export clubbed routes
