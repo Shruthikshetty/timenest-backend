@@ -4,5 +4,5 @@
 
 export const MessageLimits = {
   max: 100,
-  min: 50,
+  min: 1,
 };

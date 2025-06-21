@@ -70,7 +70,7 @@ GET {{baseUrl}}/api/messages
 ### get all message by the user and a single receiver
 GET {{baseUrl}}/api/messages/6845924daee2a515b38a3b91
 
-### with limits  start (start from what message) , limit (how many messages to get )
+### with limits  start (start from what message) , limit (how many messages to get ) , max limit is 100
 GET {{baseUrl}}/api/messages/<receiverId>?limit=2&start=0
 
 ##### ---------------------------------------------- FOLLOWER ----------------------------------------------------------- 
