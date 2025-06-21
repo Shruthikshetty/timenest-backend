@@ -55,6 +55,15 @@ export const addFollower = async (
     // extract following user id from the validated data
     const { following } = req.validatedData!;
 
+    // user can not add them self as a follower
+    if (following == _id) {
+      handleError(res, {
+        statusCode: 400,
+        message: 'You can not add yourself as a follower',
+      });
+      return;
+    }
+
     // check if the user is already following the user
     const existingFollower = await Follower.findOne({
       user: _id,
@@ -102,6 +111,12 @@ export const deleteFollower = async (
       user: req.user!._id,
       following: req.validatedData!.following,
     });
+
+    // if no follower found
+    if (!follower) {
+      handleError(res, { statusCode: 404, message: 'Follower not found' });
+      return;
+    }
 
     //send response with the deleted follower
     res.status(200).json({
