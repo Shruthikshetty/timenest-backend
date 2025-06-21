@@ -2,9 +2,11 @@
  * This is a express validation schema for adding a new follower
  */
 
+import { Types } from "mongoose";
+
 // type
 export type AddFollowerReq = {
-  following: string;
+  following: Types.ObjectId;
 };
 
 // schema
